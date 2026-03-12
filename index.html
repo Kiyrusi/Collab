@@ -1171,30 +1171,21 @@ $('btnBackKasir').addEventListener('click',()=>{hideTrxPage();document.querySele
 $('btnReloadTrx').addEventListener('click',loadTransactions);
 
 /* ── PROFILE ── */
-function loadProfile() {
-  const saved = JSON.parse(localStorage.getItem('kasir_profile') || '{}');
-  const name = saved.name || 'Admin';
-  const img  = saved.img  || null;
-  applyProfile(name, img);
-}
+// Profile stored in Supabase table "profiles" with id='default', name, avatar_url
+// Falls back to localStorage if Supabase unavailable
 
 function applyProfile(name, img) {
   const initials = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-  // Topbar badge
   $('topbarName').textContent = name;
   const ta = $('topbarAvatar');
-  if (img) {
-    ta.innerHTML = `<img src="${img}" alt="${name}">`;
-  } else {
-    ta.textContent = initials;
-  }
-  // Modal big avatar
+  if (img) { ta.innerHTML = `<img src="${img}" alt="${name}">`; }
+  else { ta.textContent = initials; }
   const pa = $('profileAvatarBig');
   $('profileAvatarInitial').textContent = initials;
   if (img) {
-    let existing = pa.querySelector('img');
-    if (!existing) { existing = document.createElement('img'); pa.insertBefore(existing, pa.firstChild); }
-    existing.src = img;
+    let ex = pa.querySelector('img');
+    if (!ex) { ex = document.createElement('img'); pa.insertBefore(ex, pa.firstChild); }
+    ex.src = img;
     $('profileAvatarInitial').style.display = 'none';
   } else {
     const ex = pa.querySelector('img'); if (ex) ex.remove();
@@ -1204,39 +1195,130 @@ function applyProfile(name, img) {
   $('profileNameInput').value = name;
 }
 
+async function loadProfile() {
+  // Try Supabase first
+  if (sbClient) {
+    try {
+      const { data, error } = await sbClient.from('profiles').select('name,avatar_url').eq('id','default').single();
+      if (!error && data) {
+        // Cache locally
+        localStorage.setItem('kasir_profile', JSON.stringify({ name: data.name, img: data.avatar_url }));
+        applyProfile(data.name || 'Admin', data.avatar_url || null);
+        return;
+      }
+    } catch(e) { console.warn('loadProfile SB error:', e.message||e.code); }
+  }
+  // Fallback: localStorage
+  const saved = JSON.parse(localStorage.getItem('kasir_profile') || '{}');
+  applyProfile(saved.name || 'Admin', saved.img || null);
+}
+
+async function saveProfileToDB(name, avatar_url) {
+  if (!sbClient) return false;
+  try {
+    const { error } = await sbClient.from('profiles').upsert({ id:'default', name, avatar_url }, { onConflict:'id' });
+    if (error) throw error;
+    return true;
+  } catch(e) {
+    console.warn('saveProfile SB error:', e.message||e.code);
+    return false;
+  }
+}
+
+async function uploadProfileImage(file) {
+  if (!sbClient || !file) return null;
+  const ext  = file.name.split('.').pop().toLowerCase();
+  if (!['jpg','jpeg','png','webp'].includes(ext)) { notify('⚠️ Format tidak didukung', true); return null; }
+  const fileName = `profile-default.${ext}`;
+  const BUCKET   = 'product-images'; // reuse same bucket
+
+  try {
+    // Remove old file first (ignore error)
+    await sbClient.storage.from(BUCKET).remove([fileName]);
+
+    const { error: upErr } = await sbClient.storage.from(BUCKET).upload(fileName, file, {
+      cacheControl: '1', upsert: true, contentType: file.type || `image/${ext}`
+    });
+    if (upErr) throw upErr;
+
+    const { data: urlData } = sbClient.storage.from(BUCKET).getPublicUrl(fileName);
+    // Bust cache with timestamp
+    return urlData?.publicUrl ? urlData.publicUrl + '?t=' + Date.now() : null;
+  } catch(e) {
+    console.warn('uploadProfileImage error:', e.message||e.code);
+    return null;
+  }
+}
+
 function openProfileModal() {
-  loadProfile();
   $('profileModal').classList.add('show');
 }
 
 $('btnProfile').addEventListener('click', openProfileModal);
 $('btnCloseProfile').addEventListener('click', () => $('profileModal').classList.remove('show'));
 $('profileModal').addEventListener('click', e => { if (e.target === $('profileModal')) $('profileModal').classList.remove('show'); });
-
 $('profileAvatarBig').addEventListener('click', () => $('profileImgInput').click());
 
-$('profileImgInput').addEventListener('change', e => {
+$('profileImgInput').addEventListener('change', async e => {
   const file = e.target.files[0]; if (!file) return;
   if (file.size > 5*1024*1024) return notify('⚠️ Ukuran max 5MB', true);
+
+  // Show preview immediately from FileReader
   const reader = new FileReader();
   reader.onload = ev => {
-    const saved = JSON.parse(localStorage.getItem('kasir_profile') || '{}');
-    saved.img = ev.target.result;
-    localStorage.setItem('kasir_profile', JSON.stringify(saved));
-    applyProfile(saved.name || 'Admin', ev.target.result);
-    notify('✅ Foto profil diperbarui!');
+    const currentName = $('profileNameInput').value.trim() || 'Admin';
+    applyProfile(currentName, ev.target.result);
   };
   reader.readAsDataURL(file);
+
+  // Upload to Supabase Storage
+  notify('⏳ Mengupload foto...');
+  const url = await uploadProfileImage(file);
+  if (url) {
+    const name = $('profileNameInput').value.trim() || 'Admin';
+    // Save to DB + localStorage
+    await saveProfileToDB(name, url);
+    localStorage.setItem('kasir_profile', JSON.stringify({ name, img: url }));
+    applyProfile(name, url);
+    notify('✅ Foto profil tersimpan!');
+  } else {
+    // Fallback: store base64 in localStorage only
+    const reader2 = new FileReader();
+    reader2.onload = ev2 => {
+      const name = $('profileNameInput').value.trim() || 'Admin';
+      localStorage.setItem('kasir_profile', JSON.stringify({ name, img: ev2.target.result }));
+      applyProfile(name, ev2.target.result);
+      notify('⚠️ Foto disimpan lokal (storage belum tersedia)');
+    };
+    reader2.readAsDataURL(file);
+  }
 });
 
-$('btnSaveProfile').addEventListener('click', () => {
+$('btnSaveProfile').addEventListener('click', async () => {
+  const btn  = $('btnSaveProfile');
   const name = ($('profileNameInput').value || '').trim() || 'Admin';
+  btn.disabled = true;
+  btn.querySelector('span').textContent = 'Menyimpan...';
+
   const saved = JSON.parse(localStorage.getItem('kasir_profile') || '{}');
-  saved.name = name;
+  saved.name  = name;
+
+  // Get current avatar_url (Supabase URL or null — don't re-save base64 to DB)
+  let avatar_url = null;
+  if (saved.img && !saved.img.startsWith('data:')) {
+    avatar_url = saved.img; // already a real URL
+  } else if (saved.img && saved.img.startsWith('data:')) {
+    avatar_url = null; // base64 stays local only
+  }
+
+  const ok = await saveProfileToDB(name, avatar_url);
   localStorage.setItem('kasir_profile', JSON.stringify(saved));
   applyProfile(name, saved.img || null);
+
+  btn.disabled = false;
+  btn.querySelector('span').textContent = 'Simpan Profil';
   $('profileModal').classList.remove('show');
-  notify('✅ Profil disimpan!');
+  notify(ok ? '✅ Profil disimpan ke Supabase!' : '✅ Profil disimpan lokal!');
 });
 
 /* ── INIT ── */
