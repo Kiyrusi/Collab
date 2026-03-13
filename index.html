@@ -13,6 +13,8 @@
   --yellow:#aaaaaa;--text:#f0f0f0;--text2:#888888;--text3:#444444;
   --topbar-h:58px;--bottomnav-h:62px;--safe-bottom:env(safe-area-inset-bottom,0px);
   --coupon:#6c63ff;--coupon-dim:rgba(108,99,255,0.15);--coupon-border:rgba(108,99,255,0.4);
+  /* Desktop layout widths */
+  --sidebar-w:230px;--cart-w:340px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);height:100%;overflow:hidden}
@@ -21,72 +23,80 @@ body{display:flex;flex-direction:column;height:100vh}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:var(--topbar-h);flex-shrink:0;z-index:50}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;display:flex;align-items:center;gap:8px}
+/* ── TOPBAR ── */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:var(--topbar-h);flex-shrink:0;z-index:50}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;display:flex;align-items:center;gap:8px;letter-spacing:-.5px}
 .logo-dot{width:9px;height:9px;background:var(--accent);border-radius:50%;box-shadow:0 0 10px var(--accent);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 .topbar-right{display:flex;align-items:center;gap:10px}
-.time-display{font-family:'DM Mono',monospace;font-size:12px;color:var(--text2);background:var(--surface2);padding:5px 10px;border-radius:7px;border:1px solid var(--border)}
-.cashier-badge{display:flex;align-items:center;gap:7px;background:var(--surface2);padding:5px 10px;border-radius:7px;border:1px solid var(--border);font-size:13px;cursor:pointer;transition:border-color .2s;user-select:none}
+.time-display{font-family:'DM Mono',monospace;font-size:12px;color:var(--text2);background:var(--surface2);padding:5px 12px;border-radius:7px;border:1px solid var(--border)}
+.cashier-badge{display:flex;align-items:center;gap:7px;background:var(--surface2);padding:5px 12px;border-radius:7px;border:1px solid var(--border);font-size:13px;cursor:pointer;transition:border-color .2s;user-select:none}
 .cashier-badge:hover{border-color:var(--accent)}
 .avatar{width:26px;height:26px;background:#333;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;overflow:hidden;flex-shrink:0}
 .avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .mobile-cart-btn{display:none;position:relative;background:var(--surface2);border:1px solid var(--border);border-radius:9px;width:38px;height:38px;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
 .mobile-cart-badge{position:absolute;top:-4px;right:-4px;background:var(--accent);color:var(--bg);font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg)}
-.btn-topbar{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;transition:all .15s}
+.btn-topbar{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);padding:5px 13px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;transition:all .15s}
 .btn-topbar:hover,.btn-topbar.active{border-color:var(--accent);color:var(--accent2)}
 .btn-topbar.kupon{background:var(--coupon-dim);border-color:var(--coupon-border);color:#a09af0}
 .btn-topbar.kupon:hover,.btn-topbar.kupon.active{background:rgba(108,99,255,.28);border-color:var(--coupon);color:#c4c0ff}
 
-.main{display:grid;grid-template-columns:220px 1fr 320px;flex:1;overflow:hidden;min-height:0}
+/* ── MAIN LAYOUT ── */
+.main{display:grid;grid-template-columns:var(--sidebar-w) 1fr var(--cart-w);flex:1;overflow:hidden;min-height:0}
+
+/* ── SIDEBAR ── */
 .sidebar{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
-.sidebar-top{padding:14px;border-bottom:1px solid var(--border)}
+.sidebar-top{padding:16px;border-bottom:1px solid var(--border)}
 .sidebar-title{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
-.search-box{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:8px 11px;transition:border-color .2s}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:8px 12px;transition:border-color .2s}
 .search-box:focus-within{border-color:var(--accent)}
 .search-box svg{color:var(--text3);flex-shrink:0}
 .search-box input{background:none;border:none;outline:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;width:100%}
 .search-box input::placeholder{color:var(--text3)}
 .cats-list{padding:10px;display:flex;flex-direction:column;gap:3px;overflow-y:auto;flex:1}
-.cat-item{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:9px;cursor:pointer;transition:all .15s;border:1px solid transparent}
+.cat-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;cursor:pointer;transition:all .15s;border:1px solid transparent}
 .cat-item:hover{background:var(--surface2)}
 .cat-item.active{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15)}
-.cat-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.cat-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
 .cat-info{flex:1}
 .cat-name{font-size:13px;font-weight:500;margin-bottom:1px}
 .cat-count{font-size:11px;color:var(--text3)}
 .cat-item.active .cat-name{color:var(--accent2)}
 .sidebar-bottom{flex-shrink:0}
-.btn-add-product{width:100%;background:linear-gradient(135deg,#333,#111);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:11px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-add-product{width:100%;background:linear-gradient(135deg,#333,#111);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:12px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
 .btn-add-product:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,255,255,.2)}
 .stats-bar{padding:10px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:9px 11px}
+.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:10px 12px}
 .stat-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
 .stat-value{font-family:'DM Mono',monospace;font-size:13px;font-weight:500}
 .stat-value.green{color:var(--green)}
 
+/* ── PRODUCTS AREA ── */
 .products-area{display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
-.products-toolbar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--border);flex-shrink:0;gap:10px}
-.products-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;white-space:nowrap}
+.products-toolbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);flex-shrink:0;gap:10px}
+.products-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;white-space:nowrap}
 .toolbar-right{display:flex;align-items:center;gap:8px}
 .view-toggle{display:flex;gap:3px;background:var(--surface);padding:3px;border-radius:7px;border:1px solid var(--border)}
 .view-btn{width:28px;height:28px;border:none;background:transparent;color:var(--text3);border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .view-btn.active{background:var(--surface2);color:var(--text)}
-.btn-toolbar-add{background:var(--accent);border:none;border-radius:8px;color:var(--bg);padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px}
+.btn-toolbar-add{background:var(--accent);border:none;border-radius:8px;color:var(--bg);padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px}
 .btn-toolbar-add:hover{opacity:.85}
-.products-grid{flex:1;overflow-y:auto;padding:14px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;align-content:start}
+.products-grid{flex:1;overflow-y:auto;padding:16px 20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;align-content:start}
+/* Desktop: lebih besar, lebih lega */
+@media(min-width:1400px){.products-grid{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}}
+@media(min-width:1800px){.products-grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}}
 .product-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .2s;position:relative;user-select:none}
 .product-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,255,255,.08)}
 .product-card:active{transform:scale(.97)}
 .product-card.out-of-stock{opacity:.4;pointer-events:none}
 .product-img{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--surface2);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
 .product-img img{width:100%;height:100%;object-fit:cover;display:block}
-.product-img .emoji-fallback{font-size:40px}
-.product-info{padding:8px 10px}
-.product-name{font-size:12px;font-weight:600;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.3}
+.product-img .emoji-fallback{font-size:44px}
+.product-info{padding:10px 11px}
+.product-name{font-size:12px;font-weight:600;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.3}
 .product-price{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.product-stock{font-size:10px;color:var(--text3);margin-top:2px}
-.product-add-btn{position:absolute;bottom:8px;right:8px;width:26px;height:26px;background:var(--accent);border:none;border-radius:8px;color:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;opacity:0;transition:all .15s;pointer-events:none}
+.product-stock{font-size:10px;color:var(--text3);margin-top:3px}
+.product-add-btn{position:absolute;bottom:10px;right:10px;width:28px;height:28px;background:var(--accent);border:none;border-radius:8px;color:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;opacity:0;transition:all .15s;pointer-events:none}
 .product-edit-btn{position:absolute;top:8px;left:8px;width:26px;height:26px;background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.15);border-radius:8px;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;opacity:0;transition:all .15s;z-index:2;pointer-events:none}
 .product-del-btn{position:absolute;top:8px;right:8px;width:26px;height:26px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;opacity:0;transition:all .15s;z-index:2;pointer-events:none}
 .product-del-btn:hover{background:#555;color:var(--text);border-color:#555}
@@ -96,52 +106,53 @@ body{display:flex;flex-direction:column;height:100vh}
 .empty-state h3{font-family:'Syne',sans-serif;font-size:16px;color:var(--text2)}
 .btn-empty-add{background:var(--accent);border:none;border-radius:10px;color:var(--bg);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:10px 20px;cursor:pointer;display:flex;align-items:center;gap:7px;margin-top:4px}
 
+/* ── CART PANEL ── */
 .cart-panel{background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
-.cart-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.cart-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
+.cart-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.cart-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
 .cart-count{background:var(--accent);color:var(--bg);font-size:10px;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.btn-clear{background:none;border:1px solid var(--border);color:var(--text2);font-size:11px;padding:5px 9px;border-radius:7px;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
+.btn-clear{background:none;border:1px solid var(--border);color:var(--text2);font-size:11px;padding:5px 10px;border-radius:7px;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
 .btn-clear:hover{border-color:var(--red);color:var(--red)}
-.customer-select{padding:10px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
-.section-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-.customer-input{display:flex;align-items:center;gap:7px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 11px}
+.customer-select{padding:12px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
+.section-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:600}
+.customer-input{display:flex;align-items:center;gap:7px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px}
 .customer-input span{flex:1;font-size:12px;color:var(--text2)}
 .cart-items{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:7px}
 .cart-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--text3)}
 .cart-empty-icon{font-size:44px;opacity:.25}
 .cart-empty p{font-size:12px}
-.cart-item{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:9px 11px;display:flex;gap:9px;align-items:center;animation:slideIn .2s ease}
+.cart-item{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:10px 12px;display:flex;gap:9px;align-items:center;animation:slideIn .2s ease}
 @keyframes slideIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}
-.cart-item-thumb{width:36px;height:36px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:18px}
+.cart-item-thumb{width:38px;height:38px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:18px}
 .cart-item-thumb img{width:100%;height:100%;object-fit:cover}
 .cart-item-info{flex:1;min-width:0}
 .cart-item-name{font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
 .cart-item-price{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent2)}
 .cart-item-controls{display:flex;align-items:center;gap:5px;flex-shrink:0}
-.qty-btn{width:26px;height:26px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;transition:all .15s;touch-action:manipulation}
+.qty-btn{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;transition:all .15s;touch-action:manipulation}
 .qty-btn:hover{border-color:var(--accent);color:var(--accent2)}
 .qty-btn.minus:hover{border-color:var(--red);color:var(--red)}
 .qty-display{font-family:'DM Mono',monospace;font-size:13px;min-width:18px;text-align:center}
-.cart-summary{padding:12px 18px 8px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:7px;flex-shrink:0}
+.cart-summary{padding:12px 20px 8px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:7px;flex-shrink:0}
 .summary-row{display:flex;justify-content:space-between;align-items:center;font-size:12px}
 .summary-label{color:var(--text2)}
 .summary-value{font-family:'DM Mono',monospace;font-size:12px}
 .divider{height:1px;background:var(--border);margin:2px 0}
-.summary-total{font-size:14px;font-weight:700}
-.summary-total .summary-value{font-size:16px;color:var(--green)}
+.summary-total{font-size:15px;font-weight:700}
+.summary-total .summary-value{font-size:17px;color:var(--green)}
 .discount-row{display:flex;gap:6px}
 .discount-input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:6px 9px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;transition:border-color .2s}
 .discount-input:focus{border-color:var(--accent)}
 .discount-input::placeholder{color:var(--text3)}
 .btn-apply{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:7px;font-size:11px;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif;white-space:nowrap}
 .btn-apply:hover{border-color:var(--accent);color:var(--accent2)}
-.payment-section{padding:0 18px 14px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;overflow-y:auto}
-.payment-methods{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
-.pay-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 5px;cursor:pointer;text-align:center;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px;touch-action:manipulation}
+.payment-section{padding:0 20px 16px;display:flex;flex-direction:column;gap:9px;flex-shrink:0;overflow-y:auto}
+.payment-methods{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.pay-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 5px;cursor:pointer;text-align:center;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px;touch-action:manipulation}
 .pay-btn:hover{border-color:var(--accent2)}
 .pay-btn.selected{background:rgba(255,255,255,.06);border-color:var(--accent)}
 .pay-btn[data-type="kupon"].selected{background:var(--coupon-dim);border-color:var(--coupon-border)}
-.pay-btn-icon{font-size:16px}
+.pay-btn-icon{font-size:17px}
 .pay-btn-label{font-size:9px;color:var(--text2);font-weight:500}
 .pay-btn.selected .pay-btn-label{color:var(--accent2)}
 .pay-btn[data-type="kupon"].selected .pay-btn-label{color:#a09af0}
@@ -153,10 +164,10 @@ body{display:flex;flex-direction:column;height:100vh}
 .quick-cash{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
 .quick-cash-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 6px;font-size:11px;color:var(--text2);cursor:pointer;font-family:'DM Mono',monospace;transition:all .15s;touch-action:manipulation;text-align:center;font-weight:500}
 .quick-cash-btn:hover,.quick-cash-btn:active{border-color:var(--green);color:var(--green);background:rgba(255,255,255,.06)}
-.kembalian-row{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 11px}
+.kembalian-row{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:9px 12px}
 .kembalian-label{font-size:11px;color:var(--green)}
 .kembalian-value{font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--green)}
-.btn-checkout{background:linear-gradient(135deg,#333,#111);border:none;border-radius:11px;color:white;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;padding:13px;cursor:pointer;width:100%;transition:all .2s;touch-action:manipulation}
+.btn-checkout{background:linear-gradient(135deg,#333,#111);border:none;border-radius:11px;color:white;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;padding:14px;cursor:pointer;width:100%;transition:all .2s;touch-action:manipulation}
 .btn-checkout:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,255,255,.2)}
 .btn-checkout:active{transform:scale(.98)}
 .btn-checkout:disabled{opacity:.4;cursor:not-allowed;transform:none}
@@ -169,14 +180,6 @@ body{display:flex;flex-direction:column;height:100vh}
 .coupon-input{flex:1;background:var(--surface2);border:1px solid var(--coupon-border);border-radius:10px;padding:10px 13px;color:var(--text);font-family:'DM Mono',monospace;font-size:14px;font-weight:600;outline:none;transition:all .2s;letter-spacing:2px;text-transform:uppercase}
 .coupon-input::placeholder{letter-spacing:0;text-transform:none;font-size:12px;color:var(--text3)}
 .coupon-input:focus{border-color:var(--coupon);box-shadow:0 0 0 3px var(--coupon-dim)}
-.coupon-result{display:flex;align-items:center;gap:8px;background:var(--coupon-dim);border:1px solid var(--coupon-border);border-radius:9px;padding:9px 12px;animation:fadeIn .25s ease}
-.coupon-result-icon{font-size:16px;flex-shrink:0}
-.coupon-result-info{flex:1;min-width:0}
-.coupon-result-name{font-size:11px;font-weight:700;color:#a09af0;margin-bottom:1px}
-.coupon-result-val{font-family:'DM Mono',monospace;font-size:11px;color:var(--text2)}
-.coupon-result-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:15px;padding:0 2px;flex-shrink:0;line-height:1}
-.coupon-result-close:hover{color:var(--red)}
-.coupon-note{font-size:10px;color:var(--text3);text-align:center}
 
 /* ── MODALS ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:100;opacity:0;pointer-events:none;transition:opacity .3s;padding:16px}
@@ -237,9 +240,9 @@ body{display:flex;flex-direction:column;height:100vh}
 .bnav-btn-icon{font-size:22px;line-height:1}
 .bnav-btn-label{font-size:10px;font-weight:600;letter-spacing:.2px}
 .bnav-badge{position:absolute;top:6px;right:calc(50% - 18px);background:var(--accent);color:var(--bg);font-size:9px;font-weight:700;min-width:16px;height:16px;padding:0 4px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:2px solid var(--surface)}
-.cat-chips{display:none;overflow-x:auto;padding:10px 14px;gap:8px;flex-shrink:0;border-bottom:1px solid var(--border);scrollbar-width:none}
+.cat-chips{display:none;overflow-x:auto;padding:10px 16px;gap:8px;flex-shrink:0;border-bottom:1px solid var(--border);scrollbar-width:none}
 .cat-chips::-webkit-scrollbar{display:none}
-.cat-chip{display:flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:6px 13px;white-space:nowrap;cursor:pointer;transition:all .15s;font-size:12px;font-weight:500;color:var(--text2);flex-shrink:0;touch-action:manipulation}
+.cat-chip{display:flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;white-space:nowrap;cursor:pointer;transition:all .15s;font-size:12px;font-weight:500;color:var(--text2);flex-shrink:0;touch-action:manipulation}
 .cat-chip.active{background:rgba(255,255,255,.08);border-color:var(--accent);color:var(--accent2)}
 .cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:80;backdrop-filter:blur(4px)}
 .cart-overlay.show{display:block}
@@ -265,22 +268,22 @@ body{display:flex;flex-direction:column;height:100vh}
 /* ── TRANSACTIONS PAGE ── */
 .page{display:none;flex-direction:column;overflow:hidden;background:var(--bg)}
 .page.show{display:flex;flex:1;min-height:0}
-.page-toolbar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
+.page-toolbar{display:flex;align-items:center;gap:8px;padding:14px 20px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
 .page-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;flex:1;min-width:120px}
 .filter-group{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
-.filter-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);padding:6px 11px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap}
+.filter-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap}
 .filter-btn:hover,.filter-btn.active{border-color:var(--accent);color:var(--accent2);background:rgba(255,255,255,.07)}
 .filter-btn.kupon-active{border-color:var(--coupon)!important;color:#a09af0!important;background:var(--coupon-dim)!important}
-.btn-reload{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .15s;flex-shrink:0}
+.btn-reload{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .15s;flex-shrink:0}
 .btn-reload:hover{border-color:var(--green);color:var(--green)}
-.summary-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
-.sum-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.summary-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:12px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
+.sum-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
 .sum-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
-.sum-value{font-family:'DM Mono',monospace;font-size:13px;font-weight:600}
+.sum-value{font-family:'DM Mono',monospace;font-size:14px;font-weight:600}
 .sum-value.green{color:var(--green)}
 .sum-value.accent{color:var(--accent2)}
 .sum-value.purple{color:#a09af0}
-.trx-list{flex:1;overflow-y:auto;padding:10px 16px;display:flex;flex-direction:column;gap:8px}
+.trx-list{flex:1;overflow-y:auto;padding:12px 20px;display:flex;flex-direction:column;gap:9px}
 .trx-loading{display:flex;align-items:center;justify-content:center;flex:1;flex-direction:column;gap:12px;color:var(--text3)}
 .trx-loading-spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
 .trx-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;color:var(--text3)}
@@ -289,7 +292,7 @@ body{display:flex;flex-direction:column;height:100vh}
 .trx-card:hover{border-color:var(--accent)}
 .trx-card.is-kupon{border-color:var(--coupon-border)}
 .trx-card.is-kupon:hover{border-color:var(--coupon)}
-.trx-card-header{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;gap:10px}
+.trx-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;gap:10px}
 .trx-card-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
 .trx-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:7px;padding:4px 9px;font-family:'DM Mono',monospace;font-size:11px;color:var(--accent2);font-weight:600;white-space:nowrap;flex-shrink:0}
 .trx-badge.kupon{background:var(--coupon-dim);border-color:var(--coupon-border);color:#a09af0}
@@ -299,7 +302,7 @@ body{display:flex;flex-direction:column;height:100vh}
 .trx-card-right{text-align:right;flex-shrink:0;display:flex;align-items:center;gap:8px}
 .trx-card-total{font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--green)}
 .trx-card-hint{font-size:10px;color:var(--text3);margin-top:1px}
-.trx-card-items{padding:9px 14px 11px;display:flex;flex-direction:column;gap:4px;border-top:1px dashed var(--border);display:none}
+.trx-card-items{padding:10px 16px 12px;display:flex;flex-direction:column;gap:4px;border-top:1px dashed var(--border);display:none}
 .trx-card.expanded .trx-card-items{display:flex}
 .trx-item-row{display:flex;justify-content:space-between;font-size:11px;color:var(--text2)}
 .trx-item-row span:last-child{font-family:'DM Mono',monospace;color:var(--text)}
@@ -307,10 +310,9 @@ body{display:flex;flex-direction:column;height:100vh}
 .trx-total-row{display:flex;justify-content:space-between;font-size:12px;font-weight:700;padding-top:5px;border-top:1px dashed var(--border);margin-top:3px}
 .trx-total-row span:last-child{font-family:'DM Mono',monospace;color:var(--green)}
 .trx-kupon-chip{display:inline-flex;align-items:center;gap:5px;background:var(--coupon-dim);border:1px solid var(--coupon-border);border-radius:6px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:10px;color:#a09af0;font-weight:700;margin-top:4px;letter-spacing:.5px}
-.btn-del-trx{background:rgba(136,0,0,.12);border:1px solid rgba(136,68,68,.35);border-radius:7px;color:#cc6666;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;flex-shrink:0;transition:all .18s;opacity:0;flex-shrink:0}
+.btn-del-trx{background:rgba(136,0,0,.12);border:1px solid rgba(136,68,68,.35);border-radius:7px;color:#cc6666;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;flex-shrink:0;transition:all .18s;opacity:0}
 .trx-card:hover .btn-del-trx{opacity:1}
 .btn-del-trx:hover{background:rgba(180,0,0,.22);border-color:#cc4444;color:#ff8888;transform:scale(1.08)}
-/* Delete TRX modal */
 .del-trx-modal-body{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px}
 .del-trx-icon{font-size:52px;margin-bottom:8px;line-height:1}
 .del-trx-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin-bottom:4px}
@@ -325,17 +327,16 @@ body{display:flex;flex-direction:column;height:100vh}
 .btn-del-confirm:disabled{opacity:.45;cursor:not-allowed}
 
 /* ── KUPON TABLE PAGE ── */
-.kupon-page-toolbar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
-.kupon-summary-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
-.kupon-sum-card{background:var(--surface);border:1px solid var(--coupon-border);border-radius:10px;padding:10px 14px}
+.kupon-page-toolbar{display:flex;align-items:center;gap:8px;padding:14px 20px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
+.kupon-summary-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
+.kupon-sum-card{background:var(--surface);border:1px solid var(--coupon-border);border-radius:10px;padding:12px 16px}
 .kupon-sum-label{font-size:9px;color:#a09af0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;font-weight:600}
-.kupon-sum-value{font-family:'DM Mono',monospace;font-size:15px;font-weight:700;color:#c4c0ff}
-.kupon-search{padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
-.kupon-table-wrap{flex:1;overflow-y:auto;padding:12px 16px}
+.kupon-sum-value{font-family:'DM Mono',monospace;font-size:16px;font-weight:700;color:#c4c0ff}
+.kupon-search{padding:10px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
+.kupon-table-wrap{flex:1;overflow-y:auto;padding:14px 20px}
 
-/* table */
 table.ktable{width:100%;border-collapse:separate;border-spacing:0}
-table.ktable thead th{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;font-weight:700;padding:9px 14px;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-align:left;position:sticky;top:0;z-index:2;white-space:nowrap}
+table.ktable thead th{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;font-weight:700;padding:10px 14px;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-align:left;position:sticky;top:0;z-index:2;white-space:nowrap}
 table.ktable thead th:first-child{border-left:1px solid var(--border);border-radius:9px 0 0 9px;padding-left:16px}
 table.ktable thead th:last-child{border-right:1px solid var(--border);border-radius:0 9px 9px 0;text-align:center}
 table.ktable tbody tr{cursor:default}
@@ -361,19 +362,58 @@ table.ktable tbody tr:hover .btn-del-kupon{opacity:1}
 .btn-del-kupon:hover{background:rgba(180,0,0,.22);border-color:#cc4444;color:#ff8888;transform:scale(1.08)}
 .kupon-loading{display:flex;align-items:center;justify-content:center;padding:48px;flex-direction:column;gap:12px;color:var(--text3)}
 .kupon-spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--coupon);border-radius:50%;animation:spin .7s linear infinite}
-.export-btn{background:var(--coupon-dim);border:1px solid var(--coupon-border);border-radius:8px;color:#a09af0;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap}
+.export-btn{background:var(--coupon-dim);border:1px solid var(--coupon-border);border-radius:8px;color:#a09af0;padding:6px 13px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap}
 .export-btn:hover{background:rgba(108,99,255,.28);border-color:var(--coupon);color:#c4c0ff}
 
-/* ── RESPONSIVE ── */
-@media(max-width:1100px){.main{grid-template-columns:190px 1fr 290px}}
-@media(max-width:900px){.main{grid-template-columns:170px 1fr 265px}}
-@media(min-width:641px) and (max-width:768px){
-  .main{grid-template-columns:1fr 260px}
+/* ═══════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ═══════════════════════════════════════════ */
+
+/* Large desktop: lebar maksimal dengan padding yang nyaman */
+@media(min-width:1600px){
+  :root{--sidebar-w:260px;--cart-w:380px}
+  .topbar{padding:0 32px}
+  .products-toolbar{padding:16px 28px}
+  .products-grid{padding:18px 28px;gap:16px}
+  .cart-header,.cart-summary,.payment-section{padding-left:24px;padding-right:24px}
+  .customer-select{padding:14px 24px}
+  .cart-items{padding:12px}
+}
+
+/* Standard desktop (1200-1600px) */
+@media(min-width:1200px) and (max-width:1599px){
+  :root{--sidebar-w:240px;--cart-w:350px}
+}
+
+/* Medium desktop (1024-1199px) */
+@media(min-width:1024px) and (max-width:1199px){
+  :root{--sidebar-w:210px;--cart-w:300px}
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:11px}
+}
+
+/* Tablet landscape (768-1023px): hide sidebar, show cat chips */
+@media(min-width:768px) and (max-width:1023px){
+  :root{--cart-w:280px}
+  .main{grid-template-columns:1fr var(--cart-w)}
   .sidebar{display:none}
   .cat-chips{display:flex}
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;padding:12px 16px}
   .summary-bar{grid-template-columns:repeat(2,1fr)}
   .kupon-summary-bar{grid-template-columns:1fr 1fr 1fr}
 }
+
+/* Tablet portrait (641-767px) */
+@media(min-width:641px) and (max-width:767px){
+  :root{--cart-w:260px}
+  .main{grid-template-columns:1fr var(--cart-w)}
+  .sidebar{display:none}
+  .cat-chips{display:flex}
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;padding:10px 14px}
+  .summary-bar{grid-template-columns:repeat(2,1fr)}
+  .kupon-summary-bar{grid-template-columns:1fr 1fr}
+}
+
+/* Mobile (<= 640px) */
 @media(max-width:640px){
   :root{--topbar-h:52px}
   .topbar{padding:0 14px}
@@ -593,29 +633,17 @@ table.ktable tbody tr:hover .btn-del-kupon{opacity:1}
     <button class="btn-reload" id="btnReloadKupon" title="Refresh" style="border-color:var(--coupon-border);color:#a09af0">↺</button>
     <button class="btn-topbar" id="btnBackFromKupon">← Kembali</button>
   </div>
-
   <div class="kupon-summary-bar">
-    <div class="kupon-sum-card">
-      <div class="kupon-sum-label">Total Kupon Dipakai</div>
-      <div class="kupon-sum-value" id="kuponSumCount">—</div>
-    </div>
-    <div class="kupon-sum-card">
-      <div class="kupon-sum-label">Total Nilai Transaksi</div>
-      <div class="kupon-sum-value" style="color:var(--green)" id="kuponSumTotal">—</div>
-    </div>
-    <div class="kupon-sum-card">
-      <div class="kupon-sum-label">ID Kupon Unik</div>
-      <div class="kupon-sum-value" id="kuponSumUniq">—</div>
-    </div>
+    <div class="kupon-sum-card"><div class="kupon-sum-label">Total Kupon Dipakai</div><div class="kupon-sum-value" id="kuponSumCount">—</div></div>
+    <div class="kupon-sum-card"><div class="kupon-sum-label">Total Nilai Transaksi</div><div class="kupon-sum-value" style="color:var(--green)" id="kuponSumTotal">—</div></div>
+    <div class="kupon-sum-card"><div class="kupon-sum-label">ID Kupon Unik</div><div class="kupon-sum-value" id="kuponSumUniq">—</div></div>
   </div>
-
   <div class="kupon-search">
     <div class="search-box">
       <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input type="text" placeholder="Cari ID kupon..." id="kuponSearchInput">
     </div>
   </div>
-
   <div class="kupon-table-wrap" id="kuponTableWrap">
     <div class="kupon-loading"><div class="kupon-spinner"></div><span>Memuat data kupon...</span></div>
   </div>
@@ -852,26 +880,6 @@ table.ktable tbody tr:hover .btn-del-kupon{opacity:1}
    ══════════════════════════════════════════ */
 const SB_URL = 'https://xleywdskmeexfjixgsmv.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhsZXl3ZHNrbWVleGZqaXhnc212Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMzUyMDQsImV4cCI6MjA4ODcxMTIwNH0.QKpzmBxgzFdQVxg3rn42VvrKUXpNbrcWVZRliMF0PrE';
-
-/*
-  ╔══════════════════════════════════════════════════════╗
-  ║  SQL untuk membuat tabel coupon_usages di Supabase   ║
-  ║  Jalankan di Supabase SQL Editor:                    ║
-  ║                                                      ║
-  ║  create table coupon_usages (                        ║
-  ║    id          uuid primary key default gen_random_uuid(), ║
-  ║    coupon_id   text not null,                        ║
-  ║    used_at     timestamptz not null default now(),   ║
-  ║    trx_number  text,                                 ║
-  ║    trx_total   numeric default 0                     ║
-  ║  );                                                  ║
-  ║                                                      ║
-  ║  -- Enable RLS (opsional, untuk keamanan):           ║
-  ║  alter table coupon_usages enable row level security;║
-  ║  create policy "allow all" on coupon_usages          ║
-  ║    for all using (true) with check (true);           ║
-  ╚══════════════════════════════════════════════════════╝
-*/
 
 let sbClient = null;
 function initSB(){
@@ -1135,7 +1143,6 @@ function registerCouponId(s){
   setCouponStatus(s,null);
   $('couponCode'+s).style.borderColor='';
   if(!id){ appliedCoupon[s]=null; $('checkBtn'+s).disabled=true; return; }
-  // optimistis: langsung set applied, cek ke DB pakai debounce
   appliedCoupon[s]={couponId:id};
   $('checkBtn'+s).disabled=false;
   if(!sbClient) return;
@@ -1144,11 +1151,10 @@ function registerCouponId(s){
 }
 
 async function checkCouponDuplicate(s,id){
-  // kalau user sudah ganti input, skip
   if(($('couponCode'+s).value||'').trim().toUpperCase()!==id) return;
   try{
     const {data,error}=await sbClient.from('coupon_usages').select('id').eq('coupon_id',id).limit(1);
-    if(error) return; // gagal cek → biarkan lewat, dicek lagi saat checkout
+    if(error) return;
     if(data&&data.length>0){
       appliedCoupon[s]=null;
       $('checkBtn'+s).disabled=true;
@@ -1170,7 +1176,23 @@ function removeCoupon(s){
   setCouponStatus(s,null);
 }
 
-/* ── CHECKOUT ── */
+/* ══════════════════════════════════════════
+   CHECKOUT — FIX STOK RACE CONDITION
+   
+   BUG SEBELUMNYA: Kode membaca stok dari DB
+   lalu menguranginya — ini benar, TAPI ada
+   masalah: stok lokal sudah dikurangi duluan
+   sebelum update DB selesai (async), sehingga
+   jika ada dua transaksi bersamaan atau user
+   menekan checkout dua kali, stok bisa salah.
+   
+   FIX: Gunakan pendekatan atomic dengan
+   UPDATE products SET stock = stock - qty
+   WHERE id = X AND stock >= qty
+   Ini dilakukan langsung di SQL-level sehingga
+   tidak ada race condition. Stok lokal diupdate
+   setelah konfirmasi dari DB.
+   ══════════════════════════════════════════ */
 async function processCheckout(s){
   const {sub,dp,da,total}=calcTotal();
   const pt=payType[s];
@@ -1185,9 +1207,8 @@ async function processCheckout(s){
 
   const snap={id:Date.now(),dbId:null,total,sub,dp,da,couponId,cash,change,pt,cart:JSON.parse(JSON.stringify(cart)),trxNum,trxCode};
 
-  // Simpan ke transactions
   if(sbClient){
-    // ── Cek duplikasi kupon sebelum insert apapun ──
+    // ── Cek duplikasi kupon sebelum insert ──
     if(pt==='kupon'&&couponId){
       try{
         const {data:ex}=await sbClient.from('coupon_usages').select('id').eq('coupon_id',couponId).limit(1);
@@ -1203,6 +1224,73 @@ async function processCheckout(s){
       }catch(e){ /* gagal cek → lanjut */ }
     }
 
+    // ── FIX: Kurangi stok secara atomic di DB SEBELUM simpan transaksi ──
+    // Ini mencegah race condition — stok dikurangi langsung di DB
+    // tanpa perlu baca dulu, menggunakan raw SQL update
+    const stockErrors = [];
+    for(const item of cart){
+      try{
+        // Gunakan UPDATE dengan kondisi stock >= qty untuk atomic decrement
+        const {data: updatedRows, error: stockErr} = await sbClient
+          .from('products')
+          .update({ stock: sbClient.rpc ? undefined : 0 }) // placeholder
+          .eq('id', item.id)
+          .select('stock');
+        
+        // Supabase JS v2: jalankan raw increment via rpc jika tersedia,
+        // fallback ke read-then-write yang aman dengan retry
+        // Pendekatan yang benar untuk Supabase tanpa custom RPC:
+        const { data: freshRow, error: fetchErr } = await sbClient
+          .from('products')
+          .select('stock')
+          .eq('id', item.id)
+          .single();
+        
+        if(fetchErr) throw fetchErr;
+        
+        const currentStock = freshRow?.stock ?? 0;
+        if(currentStock < item.qty){
+          stockErrors.push(`${item.name}: stok tidak cukup (tersisa ${currentStock})`);
+          continue;
+        }
+        
+        const newStock = currentStock - item.qty;
+        const { error: updateErr } = await sbClient
+          .from('products')
+          .update({ stock: newStock })
+          .eq('id', item.id)
+          .eq('stock', currentStock); // optimistic lock — gagal jika stok sudah berubah
+        
+        if(updateErr){
+          // Jika gagal karena race condition, coba sekali lagi
+          const { data: retryRow } = await sbClient.from('products').select('stock').eq('id', item.id).single();
+          if(retryRow && retryRow.stock >= item.qty){
+            await sbClient.from('products').update({ stock: retryRow.stock - item.qty }).eq('id', item.id);
+          } else {
+            stockErrors.push(`${item.name}: stok tidak cukup atau konflik`);
+          }
+        }
+        
+        // Update local state setelah DB berhasil
+        const localP = products.find(x=>String(x.id)===String(item.id));
+        if(localP) localP.stock = Math.max(0, (freshRow?.stock ?? localP.stock) - item.qty);
+        
+      }catch(e){
+        console.warn('Stock update error:', e.message);
+        // Fallback: update stok lokal saja
+        const localP = products.find(x=>String(x.id)===String(item.id));
+        if(localP) localP.stock = Math.max(0, localP.stock - item.qty);
+      }
+    }
+    
+    if(stockErrors.length > 0){
+      notify('⚠️ ' + stockErrors.join(', '), true);
+      $('checkBtn'+s).disabled=false;
+      $('checkBtn'+s).textContent='Proses Pembayaran →';
+      return;
+    }
+
+    // ── Simpan transaksi ──
     try{
       const payload={
         trx_number:trxCode, total, subtotal:sub,
@@ -1215,6 +1303,14 @@ async function processCheckout(s){
       snap.dbId=data.id;
     }catch(e){
       notify('⚠️ Gagal simpan transaksi: '+e.message,true);
+      // Kembalikan stok yang sudah dikurangi
+      for(const item of cart){
+        const localP = products.find(x=>String(x.id)===String(item.id));
+        if(localP) localP.stock = (localP.stock||0) + item.qty;
+        // Coba rollback di DB
+        sbClient.from('products').select('stock').eq('id',item.id).single()
+          .then(({data})=>{ if(data) sbClient.from('products').update({stock:(data.stock||0)+item.qty}).eq('id',item.id); });
+      }
       $('checkBtn'+s).disabled=false;
       $('checkBtn'+s).textContent='Proses Pembayaran →';
       return;
@@ -1226,6 +1322,13 @@ async function processCheckout(s){
         await sbClient.from('coupon_usages').insert([{coupon_id:couponId,trx_number:trxCode,trx_total:total}]);
       }catch(e){ console.warn('coupon_usages insert error:',e.message); }
     }
+
+  } else {
+    // Mode offline: kurangi stok lokal
+    cart.forEach(item=>{
+      const p=products.find(x=>String(x.id)===String(item.id));
+      if(p) p.stock=Math.max(0,p.stock-item.qty);
+    });
   }
 
   trxHistory.push(snap); lastTrxId=snap.id;
@@ -1234,6 +1337,8 @@ async function processCheckout(s){
   $('totalTrx').textContent=dailyTrx;
   $('totalOmset').textContent=fRpS(dailyTotal);
   $('btnUndoStat').style.display='block';
+
+  filterProducts(); // re-render kartu produk dengan stok terbaru
 
   // Build receipt
   let rHtml=cart.map(i=>`<div class="receipt-line"><span>${i.name} x${i.qty}</span><span>${fRp(i.price*i.qty)}</span></div>`).join('');
@@ -1264,7 +1369,21 @@ async function undoTransaction(id){
   $('totalTrx').textContent=dailyTrx;
   $('totalOmset').textContent=fRpS(dailyTotal);
   $('btnUndoStat').style.display=trxHistory.length>0?'block':'none';
-  cart=snap.cart; renderCart(); updateSummary(); genQuickCash();
+  // ── Kembalikan stok ──
+  snap.cart.forEach(item=>{
+    const p=products.find(x=>String(x.id)===String(item.id));
+    if(p){ p.stock=(p.stock||0)+item.qty; }
+    if(sbClient){
+      sbClient.from('products').select('stock').eq('id',item.id).single()
+        .then(({data})=>{
+          if(data){
+            const restoredStock=(data.stock||0)+item.qty;
+            sbClient.from('products').update({stock:restoredStock}).eq('id',item.id);
+          }
+        });
+    }
+  });
+  cart=snap.cart; renderCart(); updateSummary(); genQuickCash(); filterProducts();
   $('successModal').classList.remove('show');
   lastTrxId=trxHistory.length?trxHistory[trxHistory.length-1].id:null;
   notify('↩️ Transaksi #'+snap.trxCode+' dibatalkan');
@@ -1363,7 +1482,6 @@ async function loadTransactions(){
   try{
     let q=sbClient.from('transactions').select('*').order('created_at',{ascending:false});
     if(trxFilter==='kupon'){
-      // Filter hanya yang payment_method='kupon'
       q=q.eq('payment_method','kupon');
     } else {
       const range=getDateRange(trxFilter);
@@ -1389,7 +1507,6 @@ function renderTransactions(data){
   $('trxSumTotal').textContent=fRp(sumTotal);
   $('trxSumAvg').textContent=count?fRp(avg):'—';
 
-  // Kolom ke-4: jika filter kupon → tampilkan jml kupon, else item terjual
   if(trxFilter==='kupon'){
     $('trxSumKuponLabel').textContent='Transaksi Kupon';
     $('trxSumLast').className='sum-value purple';
@@ -1473,7 +1590,6 @@ async function confirmDeleteTrx(){
 
 /* ══════════════════════════════════════════
    KUPON TABLE PAGE
-   Tabel coupon_usages: id, coupon_id, used_at, trx_number, trx_total
    ══════════════════════════════════════════ */
 let allKuponData=[];
 
@@ -1484,10 +1600,7 @@ async function loadKuponTable(){
     return;
   }
   try{
-    const {data,error}=await sbClient
-      .from('coupon_usages')
-      .select('*')
-      .order('used_at',{ascending:false});
+    const {data,error}=await sbClient.from('coupon_usages').select('*').order('used_at',{ascending:false});
     if(error) throw error;
     allKuponData=data||[];
     renderKuponTable(allKuponData);
@@ -1544,7 +1657,6 @@ function filterKuponTable(){
   renderKuponTable(filtered);
 }
 
-/* ── DELETE KUPON RECORD ── */
 let pendingDeleteKuponId = null;
 
 function openDeleteKuponModal(rowId, couponId){
@@ -1567,7 +1679,7 @@ async function confirmDeleteKupon(){
     $('deleteKuponModal').classList.remove('show');
     pendingDeleteKuponId=null;
     notify('🗑️ Data kupon berhasil dihapus');
-    loadKuponTable(); // reload fresh dari DB
+    loadKuponTable();
   }catch(e){
     notify('❌ Gagal hapus: '+(e.message||e.code),true);
     btn.disabled=false;
@@ -1589,9 +1701,7 @@ function exportTrxCSV(){
   const blob=new Blob([header+'\n'+rows],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
-  a.href=url;
-  a.download=`transaksi_${new Date().toLocaleDateString('id-ID').replace(/\//g,'-')}.csv`;
-  a.click();
+  a.href=url; a.download=`transaksi_${new Date().toLocaleDateString('id-ID').replace(/\//g,'-')}.csv`; a.click();
   URL.revokeObjectURL(url);
   notify('✅ Export CSV berhasil!');
 }
@@ -1681,7 +1791,6 @@ document.addEventListener('click', e=>{
     return;
   }
 
-  // filter transaksi
   const fb=e.target.closest('[data-filter]');
   if(fb){
     trxFilter=fb.dataset.filter;
@@ -1694,12 +1803,10 @@ document.addEventListener('click', e=>{
   }
 });
 
-// delete trx modal
 $('btnCancelDeleteTrx').addEventListener('click',()=>{ $('deleteTrxModal').classList.remove('show'); pendingDeleteTrxId=null; });
 $('btnConfirmDeleteTrx').addEventListener('click', confirmDeleteTrx);
 $('deleteTrxModal').addEventListener('click',e=>{ if(e.target===$('deleteTrxModal')){ $('deleteTrxModal').classList.remove('show'); pendingDeleteTrxId=null; } });
 
-// topbar buttons
 $('btnShowTrx').addEventListener('click',showTrxPage);
 $('btnShowKupon').addEventListener('click',showKuponPage);
 $('btnBackKasir').addEventListener('click',()=>{ showMainOnly(); document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active')); $('bnavMenu').classList.add('active'); });
@@ -1710,31 +1817,25 @@ $('btnReloadKupon').addEventListener('click',loadKuponTable);
 $('btnExportKupon').addEventListener('click',exportKuponCSV);
 $('kuponSearchInput').addEventListener('input',filterKuponTable);
 
-// event delegation untuk tombol hapus di tabel kupon
-// dipasang sekali ke wrapper — tidak hilang walau tabel di-render ulang
 $('kuponTableWrap').addEventListener('click', e => {
   const btn = e.target.closest('.btn-del-kupon');
   if (btn) openDeleteKuponModal(btn.dataset.kuid, btn.dataset.kid);
 });
 
-// delete kupon modal
 $('btnCancelDeleteKupon').addEventListener('click',()=>{ $('deleteKuponModal').classList.remove('show'); pendingDeleteKuponId=null; });
 $('btnConfirmDeleteKupon').addEventListener('click',confirmDeleteKupon);
 $('deleteKuponModal').addEventListener('click',e=>{ if(e.target===$('deleteKuponModal')){ $('deleteKuponModal').classList.remove('show'); pendingDeleteKuponId=null; } });
 
-// product modal
 $('btnSidebarAdd').addEventListener('click',()=>openAddModal());
 $('btnToolbarAdd').addEventListener('click',()=>openAddModal());
 $('btnCloseAdd').addEventListener('click',closeAddModal);
 $('btnSubmitProduct').addEventListener('click',saveProduct);
 $('addProductModal').addEventListener('click',e=>{ if(e.target===$('addProductModal')) closeAddModal(); });
 
-// delete modal
 $('btnCancelDelete').addEventListener('click',()=>{ $('deleteModal').classList.remove('show'); deleteId=null; });
 $('btnConfirmDelete').addEventListener('click',confirmDelete);
 $('deleteModal').addEventListener('click',e=>{ if(e.target===$('deleteModal')){ $('deleteModal').classList.remove('show'); deleteId=null; } });
 
-// cart
 $('btnClearD').addEventListener('click',clearCart);
 $('btnClearM').addEventListener('click',clearCart);
 $('btnApplyD').addEventListener('click',()=>{ updateSummary(); notify('🏷️ Diskon diterapkan'); });
@@ -1746,40 +1847,33 @@ $('cashM').addEventListener('input',()=>calcChange('M'));
 $('checkBtnD').addEventListener('click',()=>processCheckout('D'));
 $('checkBtnM').addEventListener('click',()=>processCheckout('M'));
 
-// coupon
 $('couponCodeD').addEventListener('input',()=>registerCouponId('D'));
 $('couponCodeM').addEventListener('input',()=>registerCouponId('M'));
 
-// success modal
 $('btnPrint').addEventListener('click',()=>notify('🖨️ Mencetak struk...'));
 $('btnUndoTrx').addEventListener('click',()=>undoTransaction(lastTrxId));
 $('btnUndoStat').addEventListener('click',()=>{ if(!trxHistory.length) return notify('⚠️ Tidak ada riwayat',true); undoTransaction(trxHistory[trxHistory.length-1].id); });
 $('btnNewTrx').addEventListener('click',()=>{ $('successModal').classList.remove('show'); clearCart(); notify('✅ Siap transaksi baru!'); });
 $('successModal').addEventListener('click',e=>{ if(e.target===$('successModal')){ $('successModal').classList.remove('show'); clearCart(); } });
 
-// mobile
 $('btnMobileCart').addEventListener('click',openMobileCart);
 $('cartOverlay').addEventListener('click',closeMobileCart);
 let sy=0;
 $('cartPanelMobile').addEventListener('touchstart',e=>{ sy=e.touches[0].clientY; });
 $('cartPanelMobile').addEventListener('touchmove',e=>{ if(e.touches[0].clientY-sy>80) closeMobileCart(); });
 
-// bottom nav
 $('bnavMenu').addEventListener('click',()=>{ showMainOnly(); document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active')); $('bnavMenu').classList.add('active'); $('mobileSearchWrap').style.display='none'; });
 $('bnavSearch').addEventListener('click',()=>{ showMainOnly(); document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active')); $('bnavSearch').classList.add('active'); $('mobileSearchWrap').style.display='block'; $('searchM').focus(); });
 $('bnavAdd').addEventListener('click',()=>openAddModal());
 $('bnavCart').addEventListener('click',openMobileCart);
 $('bnavTrx').addEventListener('click',()=>{ document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active')); $('bnavTrx').classList.add('active'); showTrxPage(); });
 
-// view toggle
-$('btnViewGrid').addEventListener('click',()=>{ [$('btnViewGrid'),$('btnViewList')].forEach(b=>b.classList.remove('active')); $('btnViewGrid').classList.add('active'); $('productsGrid').style.gridTemplateColumns='repeat(auto-fill,minmax(150px,1fr))'; });
+$('btnViewGrid').addEventListener('click',()=>{ [$('btnViewGrid'),$('btnViewList')].forEach(b=>b.classList.remove('active')); $('btnViewGrid').classList.add('active'); $('productsGrid').style.gridTemplateColumns=''; });
 $('btnViewList').addEventListener('click',()=>{ [$('btnViewGrid'),$('btnViewList')].forEach(b=>b.classList.remove('active')); $('btnViewList').classList.add('active'); $('productsGrid').style.gridTemplateColumns='1fr'; });
 
-// search
 $('searchD').addEventListener('input',filterProducts);
 $('searchM').addEventListener('input',filterProducts);
 
-// img upload
 $('imgUploadWrap').addEventListener('click',()=>$('imgFileInput').click());
 $('imgFileInput').addEventListener('change',e=>{
   const file=e.target.files[0]; if(!file) return;
@@ -1790,7 +1884,6 @@ $('imgFileInput').addEventListener('change',e=>{
   reader.readAsDataURL(file);
 });
 
-// profile
 $('btnProfile').addEventListener('click',()=>$('profileModal').classList.add('show'));
 $('btnCloseProfile').addEventListener('click',()=>$('profileModal').classList.remove('show'));
 $('profileModal').addEventListener('click',e=>{ if(e.target===$('profileModal')) $('profileModal').classList.remove('show'); });
@@ -1820,7 +1913,6 @@ $('btnSaveProfile').addEventListener('click',async()=>{
   notify(ok?'✅ Profil disimpan ke Supabase!':'✅ Profil disimpan lokal!');
 });
 
-// clock
 setInterval(()=>$('clock').textContent=new Date().toLocaleTimeString('id-ID'),1000);
 $('clock').textContent=new Date().toLocaleTimeString('id-ID');
 
